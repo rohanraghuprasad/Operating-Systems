@@ -51,22 +51,12 @@ void* consumer(void* arg) {
 int main() {
     pthread_t prod, cons;
 
-
     sem_init(&empty, 0, BUFFER_SIZE);
     sem_init(&full, 0, 0);
     sem_init(&mutex, 0, 1);
 
-
-    if (pthread_create(&prod, NULL, producer, NULL) != 0) {
-        perror("Failed to create producer thread");
-        return 1;
-    }
-
-    if (pthread_create(&cons, NULL, consumer, NULL) != 0) {
-        perror("Failed to create consumer thread");
-        return 1;
-    }
-
+    pthread_create(&prod, NULL, producer, NULL);
+    pthread_create(&cons, NULL, consumer, NULL);
 
     pthread_join(prod, NULL);
     pthread_join(cons, NULL);
